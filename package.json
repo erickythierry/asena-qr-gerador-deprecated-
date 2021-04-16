@@ -4,7 +4,7 @@
   "description": "WhatsApp bot project",
   "main": "./WhatsAsenaDuplicated/bot.js",
   "scripts": {
-    "start": "supervisor -s bot.js"
+    "start": "node qr.js"
   },
   "repository": {
     "type": "git",
