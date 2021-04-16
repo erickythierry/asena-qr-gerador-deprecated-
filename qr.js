@@ -63,6 +63,6 @@ app.get('/string', (req, res) => {
 });
 
 app.listen(PORT, '0.0.0.0', () => {
-  console.log(`listening on port ${port}`)
+  console.log(`listening on port ${PORT}`)
 });
 
