@@ -5,7 +5,7 @@
     <title>WhatsApp Bot</title>
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <script src="http://cloud.ethi.ga/d/qrcode.js"></script>
+    <script src="/qrcode.js"></script>
     <style>
         body { padding-top:50px; }
     </style>
@@ -57,7 +57,7 @@
         function start(){
             setTimeout(function(){
 
-                fetch('https://wppsession.herokuapp.com/qr').then(function (response) {
+                fetch('/qr').then(function (response) {
                     // The API call was successful!
                     return response.text();
                 }).then(function (html) {
@@ -84,7 +84,7 @@
         start();
         
         function getString(){
-            fetch('https://wppsession.herokuapp.com/string').then(function (response) {
+            fetch('/string').then(function (response) {
                 // The API call was successful!
                 return response.text();
             }).then(function (html) {

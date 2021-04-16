@@ -38,7 +38,7 @@ var path = require('path');
 const PORT = process.env.PORT || 5000;
 user1 = new printqr();
 iniciado = false
-
+app.use(express.static(__dirname + '/public'));
 
 app.get('/', (req, res) => {
     if (iniciado == false){
