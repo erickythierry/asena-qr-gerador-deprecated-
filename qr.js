@@ -8,6 +8,7 @@ class printqr{
         this.conn.logger.level = 'warn';
         this.qrstring = "";
         this.iniciado = false
+        this.conectado = false
     }
     
     iniciar(){
@@ -15,8 +16,13 @@ class printqr{
             console.log('Connecting to Whatsapp... Please Wait.');
             this.iniciado = true
         });
+        
         this.conn.on('qr', qr => {
             this.qrstring = qr;
+        });
+        
+        this.conn.on('credentials-updated', () => {
+            this.conectado = true;
         });
             
         this.conn.connect();
@@ -25,12 +31,15 @@ class printqr{
         return this.qrstring;
     }
     string(){
-        texto = this.Session.createStringSession(this.conn.base64EncodedAuthInfo());
+        var texto = this.Session.createStringSession(this.conn.base64EncodedAuthInfo());
         this.conn.close();
         return texto;
     }
     rodando(){
         return this.iniciado;
+    }
+    conectado(){
+        return this.conectado
     }
     
 }
@@ -58,8 +67,12 @@ app.get('/qr', (req, res) => {
 });
 
 app.get('/string', (req, res) => {
-        
-    res.send(user.string());
+    if (user.conectado){
+        res.send(user.string());
+    }else{
+        res.send('escaneie o QR code');
+    }
+    
 
 });
 

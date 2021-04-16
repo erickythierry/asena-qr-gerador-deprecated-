@@ -14,15 +14,16 @@
 
     <div class="container">
         <div class="jumbotron">
-            <h1 class="display-1 text-center ">Bot WhatsApp</h1>
+            <p class="display-1 text-center ">WhatsApp Bot</p>
         </div>
+        <br>
         <div class="row">
             <div class="col-sm"></div>
             <div class="col-sm rounded mx-auto d-block">
-                <p>escaneie o codigo QR e depois clique no botão abaixo</p>
+                <center><p id="textoscan">escaneie o codigo QR abaixo</p></center>
                 <br>
                 <br>
-                <div class="text-center" id="qrcode">aguarde...</div>
+                <div class="text-center" id="qrcode">gerando QR, aguarde...</div>
             </div>
             <div class="col-sm"></div>
         </div>
@@ -33,20 +34,12 @@
             <div class="col-sm"></div>
         </div>
         <br>
-        <div class="row">
-            <div class="col-sm"></div>
-            <div class="col-sm text-center"> 
-               
-                <button type="button" class="btn btn-success btn-lg" onclick="getString()">Session String</button>
-            </div>
-            <div class="col-sm"></div>
-        </div>
         <br>
         <br>
         <div class="row ">
             <div class="col-sm"></div>
             <div class="col-sm text-center ">
-                <p>by <a href="https://github.com/erickythierry">thierry</a> </p>
+                <p>created by <a href="https://github.com/erickythierry">thierry</a> </p>
             </div>
             <div class="col-sm"></div>
         </div>
@@ -54,9 +47,9 @@
     </div>
 
     <script>
+        var loop = true;
         function start(){
             setTimeout(function(){
-
                 fetch('/qr').then(function (response) {
                     // The API call was successful!
                     return response.text();
@@ -77,27 +70,34 @@
                     console.warn('algo deu errado.', err);
                 });
 
-                start();
+
+                fetch('/string').then(function (response) {
+                    // The API call was successful!
+                    return response.text();
+                }).then(function (html) {
+                    // This is the HTML from our response as a text string
+                    console.log(html);
+                    document.getElementById('sessao').value = '';
+                    document.getElementById('sessao').value = html;
+                    if (html.length>20){
+                        loop=false;
+                        document.getElementById("qrcode").innerHTML = "";
+                        document.getElementById("textoscan").innerHTML = "";
+                        document.getElementById("qrcode").innerHTML = "<h6>Session String gerada com sucesso!</h6>";
+                    }
+
+                }).catch(function (err) {
+                    // There was an error
+                    console.warn('algo deu errado.', err);
+                });
+                if (loop){
+                    start();
+                }
+                
             }, 3000);
         
         }
         start();
-        
-        function getString(){
-            fetch('/string').then(function (response) {
-                // The API call was successful!
-                return response.text();
-            }).then(function (html) {
-                // This is the HTML from our response as a text string
-                console.log(html);
-                document.getElementById('sessao').value = '';
-                document.getElementById('sessao').value = html;
-
-            }).catch(function (err) {
-                // There was an error
-                console.warn('algo deu errado.', err);
-            });
-        }
         
     
     </script>
