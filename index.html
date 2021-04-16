@@ -57,7 +57,7 @@
         function start(){
             setTimeout(function(){
 
-                fetch('/qr').then(function (response) {
+                fetch('https://wppsession.herokuapp.com/qr').then(function (response) {
                     // The API call was successful!
                     return response.text();
                 }).then(function (html) {
@@ -84,7 +84,7 @@
         start();
         
         function getString(){
-            fetch('/string').then(function (response) {
+            fetch('https://wppsession.herokuapp.com/string').then(function (response) {
                 // The API call was successful!
                 return response.text();
             }).then(function (html) {
