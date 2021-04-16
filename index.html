@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>WhatsApp Bot</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="http://cloud.ethi.ga/d/qrcode.js"></script>
+    <style>
+        body { padding-top:50px; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="jumbotron">
+            <h1 class="display-1 text-center ">Bot WhatsApp</h1>
+        </div>
+        <div class="row">
+            <div class="col-sm"></div>
+            <div class="col-sm rounded mx-auto d-block">
+                <p>escaneie o codigo QR e depois clique no botão abaixo</p>
+                <br>
+                <br>
+                <div class="text-center" id="qrcode">aguarde...</div>
+            </div>
+            <div class="col-sm"></div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-sm"></div>
+            <div class="col-sm text-center"> <textarea id="sessao" rows="10" cols="60"></textarea></div>
+            <div class="col-sm"></div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-sm"></div>
+            <div class="col-sm text-center"> 
+               
+                <button type="button" class="btn btn-success btn-lg" onclick="getString()">Session String</button>
+            </div>
+            <div class="col-sm"></div>
+        </div>
+        <br>
+        <br>
+        <div class="row ">
+            <div class="col-sm"></div>
+            <div class="col-sm text-center ">
+                <p>by <a href="https://github.com/erickythierry">thierry</a> </p>
+            </div>
+            <div class="col-sm"></div>
+        </div>
+        
+    </div>
+
+    <script>
+        function start(){
+            setTimeout(function(){
+
+                fetch('/qr').then(function (response) {
+                    // The API call was successful!
+                    return response.text();
+                }).then(function (html) {
+                    // This is the HTML from our response as a text string
+                    console.log(html);
+                    document.getElementById("qrcode").innerHTML = "";
+                    var qrcode = new QRCode(document.getElementById("qrcode"), {
+                        text: html,
+                        width: 350,
+	                    height: 350,
+                        colorDark : "#48774B",
+                        colorLight : "#ffffff"
+                    });
+
+                }).catch(function (err) {
+                    // There was an error
+                    console.warn('algo deu errado.', err);
+                });
+
+                start();
+            }, 3000);
+        
+        }
+        start();
+        
+        function getString(){
+            fetch('/string').then(function (response) {
+                // The API call was successful!
+                return response.text();
+            }).then(function (html) {
+                // This is the HTML from our response as a text string
+                console.log(html);
+                document.getElementById('sessao').value = '';
+                document.getElementById('sessao').value = html;
+
+            }).catch(function (err) {
+                // There was an error
+                console.warn('algo deu errado.', err);
+            });
+        }
+        
+    
+    </script>
+</body>
+</html>
