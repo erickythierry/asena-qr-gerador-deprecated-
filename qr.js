@@ -6,14 +6,14 @@ class printqr{
         this.conn = new WAConnection();
         this.Session = new StringSession();
         this.conn.logger.level = 'warn';
-        this.conn.regenerateQRIntervalMs = 50000;
         this.qrstring = "";
-        
+        this.iniciado = false
     }
     
     iniciar(){
         this.conn.on('connecting', async () => {
             console.log('Connecting to Whatsapp... Please Wait.');
+            this.iniciado = true
         });
         this.conn.on('qr', qr => {
             this.qrstring = qr;
@@ -25,9 +25,12 @@ class printqr{
         return this.qrstring;
     }
     string(){
-
-        
-        return this.Session.createStringSession(this.conn.base64EncodedAuthInfo());
+        texto = this.Session.createStringSession(this.conn.base64EncodedAuthInfo());
+        this.conn.close();
+        return texto;
+    }
+    rodando(){
+        return this.iniciado;
     }
     
 }
@@ -36,15 +39,13 @@ const express = require('express');;
 const app = express();
 var path = require('path');
 const PORT = process.env.PORT || 5000;
-user1 = new printqr();
-iniciado = false
 app.use(express.static(__dirname + '/public'));
 
 app.get('/', (req, res) => {
-    if (iniciado == false){
-        user1.iniciar()
+    user = new printqr();
+    if (user.rodando() == false){
+        user.iniciar()
         res.sendFile(path.join(__dirname + '/index.html'))
-        iniciado = true
     }
     else{
         res.sendFile(path.join(__dirname + '/index.html'))
@@ -53,12 +54,12 @@ app.get('/', (req, res) => {
 
 app.get('/qr', (req, res) => {
     
-    res.send(user1.pegarqr());
+    res.send(user.pegarqr());
 });
 
 app.get('/string', (req, res) => {
         
-    res.send(user1.string());
+    res.send(user.string());
 
 });
 
