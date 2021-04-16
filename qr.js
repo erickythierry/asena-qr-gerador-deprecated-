@@ -1,3 +1,8 @@
+/*
+        author: Thierry
+        repository: https://github.com/erickythierry/asena-qr-gerador
+
+*/
 var {WAConnection} = require('@adiwajshing/baileys');
 var {StringSession} = require('./whatsasena/');
 
