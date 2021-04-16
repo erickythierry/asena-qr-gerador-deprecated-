@@ -1,0 +1,6 @@
+{
+    "name": "Asena Session String generator",
+    "description": "um simples projeto para gerar string session para login no WhatsAsena bot",
+    "repository": "https://github.com/erickythierry/asena-qr-gerador",
+    "keywords": ["node", "express", "static", "whatsasena", "qrcode"]
+  }
