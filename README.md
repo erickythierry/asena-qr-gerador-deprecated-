@@ -10,4 +10,5 @@
 
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/erickythierry/asena-qr-gerador/tree/main)
 
-- delete the app after using it. (it cannot be used simultaneously by several people)
+- this application **cannot be used simultaneously** by several people. if two people use it **simultaneously**, the app will generate the **same code for both*.
+- **No problem using one at a time**
