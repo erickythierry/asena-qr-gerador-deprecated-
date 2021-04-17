@@ -67,14 +67,16 @@
                 }).then(function (html) {
                     // This is the HTML from our response as a text string
                     console.log(html);
-                    document.getElementById("startup").innerHTML = "";
-                    var qrcode = new QRCode(document.getElementById("startup"), {
-                        text: html,
-                        width: 190,
-                      height: 190,
-                        colorDark : "#48774B",
-                        colorLight : "#ffffff"
-                    });
+                    if (html.includes('==,')){
+                      document.getElementById("startup").innerHTML = "";
+                      var qrcode = new QRCode(document.getElementById("startup"), {
+                          text: html,
+                          width: 270,
+                        height: 270,
+                          colorDark : "#000000",
+                          colorLight : "#ffffff"
+                      });
+                    }
 
                 }).catch(function (err) {
                     // There was an error
@@ -88,10 +90,10 @@
                 }).then(function (html) {
                     // This is the HTML from our response as a text string
                     console.log(html);
-                    if (html.length>20){
+                    if (html.includes(';;;')){
                         loop=false;
                         document.getElementById("startup").innerHTML = "";
-                        document.getElementById("startup").innerHTML = "<h6 class='alert alert-success text-center'>Sucess</h6><textarea class='form-control' rows='10'>"+html+"</textarea>";
+                        document.getElementById("startup").innerHTML = "<h6 class='alert alert-success text-center'>Scan Sucess</h6><textarea class='form-control' rows='10'>"+html+"</textarea>";
                     }
 
                 }).catch(function (err) {
