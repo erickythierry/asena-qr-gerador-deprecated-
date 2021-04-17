@@ -3,8 +3,14 @@
         repository: https://github.com/erickythierry/asena-qr-gerador
 
 */
-var {WAConnection} = require('@adiwajshing/baileys');
-var {StringSession} = require('./whatsasena/');
+const {WAConnection} = require('@adiwajshing/baileys');
+const {StringSession} = require('./whatsasena/');
+const express = require('express');;
+const app = express();
+const path = require('path');
+const PORT = process.env.PORT || 5000;
+
+app.use(express.static(__dirname + '/public'));
 
 class printqr{
     constructor(){
@@ -48,12 +54,6 @@ class printqr{
     }
     
 }
-
-const express = require('express');;
-const app = express();
-var path = require('path');
-const PORT = process.env.PORT || 5000;
-app.use(express.static(__dirname + '/public'));
 
 app.get('/', (req, res) => {
     user = new printqr();
