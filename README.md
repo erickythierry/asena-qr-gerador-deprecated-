@@ -1,7 +1,7 @@
 # Asena QR gerador
 #### simple project to generate session login string by scanning the QR code
 
-![alt text](https://raw.githubusercontent.com/erickythierry/asena-qr-gerador/4d8ffb4f74696f625bb8762d7838a6d93886921c/exemple.png)
+![alt text](https://raw.githubusercontent.com/erickythierry/asena-qr-gerador/729c4a2f927a6745fc829b00c4517699532fb94d/exemple.png)
 
 ### Instructions for use:
 - just click on the button below and deploy to your heroku account
