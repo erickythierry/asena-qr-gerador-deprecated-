@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>WhatsApp Bot</title>
+    <meta name="author" content="ErickyThierry">
+    <meta name="description" content="string session generator for Whatsasena project">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="/qrcode.js"></script>
+    <style>
+        body { padding-top:50px; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="jumbotron">
+            <p class="display-1 text-center ">WhatsApp Bot</p>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-sm"></div>
+            <div class="col-sm rounded mx-auto d-block">
+                <center><p id="textoscan">escaneie o codigo QR abaixo</p></center>
+                <br>
+                <br>
+                <div class="text-center" id="qrcode">gerando QR, aguarde...</div>
+            </div>
+            <div class="col-sm"></div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-sm"></div>
+            <div class="col-sm text-center"> <textarea id="sessao" rows="10" cols="60"></textarea></div>
+            <div class="col-sm"></div>
+        </div>
+        <br>
+        <br>
+        <br>
+        <div class="row ">
+            <div class="col-sm"></div>
+            <div class="col-sm text-center ">
+                <p>created by <a href="https://github.com/erickythierry">thierry</a> </p>
+            </div>
+            <div class="col-sm"></div>
+        </div>
+        
+    </div>
+
+    <script>
+        /*
+        author: Thierry
+        repository: https://github.com/erickythierry/asena-qr-gerador
+        */
+        var loop = true;
+        function start(){
+            setTimeout(function(){
+                fetch('/qr').then(function (response) {
+                    // The API call was successful!
+                    return response.text();
+                }).then(function (html) {
+                    // This is the HTML from our response as a text string
+                    console.log(html);
+                    document.getElementById("qrcode").innerHTML = "";
+                    var qrcode = new QRCode(document.getElementById("qrcode"), {
+                        text: html,
+                        width: 350,
+	                    height: 350,
+                        colorDark : "#48774B",
+                        colorLight : "#ffffff"
+                    });
+
+                }).catch(function (err) {
+                    // There was an error
+                    console.warn('algo deu errado.', err);
+                });
+
+
+                fetch('/string').then(function (response) {
+                    // The API call was successful!
+                    return response.text();
+                }).then(function (html) {
+                    // This is the HTML from our response as a text string
+                    console.log(html);
+                    document.getElementById('sessao').value = '';
+                    document.getElementById('sessao').value = html;
+                    if (html.length>20){
+                        loop=false;
+                        document.getElementById("qrcode").innerHTML = "";
+                        document.getElementById("textoscan").innerHTML = "";
+                        document.getElementById("qrcode").innerHTML = "<h6>Session String gerada com sucesso!</h6>";
+                    }
+
+                }).catch(function (err) {
+                    // There was an error
+                    console.warn('algo deu errado.', err);
+                });
+                if (loop){
+                    start();
+                }
+                
+            }, 3000);
+        
+        }
+        start();
+        
+    
+    </script>
+</body>
+</html>
